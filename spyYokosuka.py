@@ -1,16 +1,45 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 import time
 import datetime
 import winsound
+import smtplib
+from email.mime.text import MIMEText
 
 driver = webdriver.Chrome()   #打开chrome浏览器
 driver.implicitly_wait(10)
 
 while True:
     driver.get('http://area599.blogspot.hk/?view=classic')   #chrome浏览器转至
-    time.sleep(20)
-
-    item = driver.find_element_by_class_name('article-header')
+    
+    openFlag = 1
+    for i in range(10)
+        try:
+            item = driver.find_element_by_class_name('article-header')
+            openFlag = 1
+        except NoSuchElementException:
+            driver.get('http://area599.blogspot.hk/?view=classic')
+            openFlag = 0
+            
+    if openFlag == 0
+        print("Can't open website!/n")
+        driver.quit()
+        
+        #from email.mime.text import MIMEText
+ 
+        msg = MIMEText("spy is down")
+        msg['Subject'] = u'Alert'
+        msg['From'] = "312487299@qq.com"
+        msg['To'] = "zhangtao3601@gmail.com"
+        
+        smtp = smtplib.SMTP()
+        smtp.connect('smtp.qq.com')
+        smtp.login("312487299@qq.com", "tyxy13Z")
+        smtp.sendmail("312487299@qq.com", "zhangtao3601@gmail.com", msg.as_string())
+        smtp.quit()
+        
+        exit()
+    
     title = item.find_element_by_tag_name('h1').text
 
     if 'FAY' in title:
