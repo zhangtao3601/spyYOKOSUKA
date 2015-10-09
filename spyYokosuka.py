@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import WebDriverException
 import time
 import datetime
 import winsound
@@ -7,21 +8,27 @@ import smtplib
 from email.mime.text import MIMEText
 
 driver = webdriver.Chrome()   #打开chrome浏览器
-driver.implicitly_wait(10)
+driver.implicitly_wait(20)
 
 while True:
-    driver.get('http://area599.blogspot.hk/?view=classic')   #chrome浏览器转至
-    
     openFlag = 1
-    for i in range(10)
+    for i in range(5):
         try:
+            driver.get('http://area599.blogspot.hk/?view=classic')   #chrome浏览器转至
             item = driver.find_element_by_class_name('article-header')
             openFlag = 1
+            break
         except NoSuchElementException:
-            driver.get('http://area599.blogspot.hk/?view=classic')
+            #driver.get('http://area599.blogspot.hk/?view=classic')
             openFlag = 0
+        except WebDriverException:
+            openFlag = 0
+        except:
+            openFlag = 0
+            break;
             
-    if openFlag == 0
+            
+    if openFlag == 0:
         print("Can't open website!/n")
         driver.quit()
         
@@ -37,7 +44,8 @@ while True:
         smtp.login("312487299@qq.com", "tyxy13Z")
         smtp.sendmail("312487299@qq.com", "zhangtao3601@gmail.com", msg.as_string())
         smtp.quit()
-        
+
+        driver.close()
         exit()
     
     title = item.find_element_by_tag_name('h1').text
@@ -60,4 +68,3 @@ while True:
     else:
         print(datetime.datetime.now())
         time.sleep(50)
-
