@@ -18,14 +18,19 @@ while True:
             item = driver.find_element_by_class_name('article-header')
             openFlag = 1
             break
-        except NoSuchElementException:
+        except NoSuchElementException as err1:
             #driver.get('http://area599.blogspot.hk/?view=classic')
-            openFlag = 0
-        except WebDriverException:
-            openFlag = 0
+            if i == 4:
+                print(format(err1))
+                openFlag = 0
+        except WebDriverException as err2:
+            if i == 4:
+                pring(format(err2))
+                openFlag = 0
         except:
             openFlag = 0
-            break;
+            raise()
+            break
             
             
     if openFlag == 0:
@@ -45,7 +50,9 @@ while True:
         smtp.sendmail("312487299@qq.com", "zhangtao3601@gmail.com", msg.as_string())
         smtp.quit()
 
-        driver.close()
+        errWavFile = r'c:\b.wav'
+        winsound.PlaySound(errWavFile,winsound.SND_NODEFAULT)
+        
         exit()
     
     title = item.find_element_by_tag_name('h1').text
@@ -68,3 +75,4 @@ while True:
     else:
         print(datetime.datetime.now())
         time.sleep(50)
+
