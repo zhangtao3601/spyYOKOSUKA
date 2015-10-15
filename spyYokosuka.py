@@ -81,7 +81,7 @@ while True:
         timePublishedstr = publishInfo.find_element_by_tag_name('abbr').get_attribute('title')
         timePublishedCut = timePublishedstr[:10]+' '+timePublishedstr[11:19]
         timePublished = datetime.datetime.strptime(timePublishedCut,"%Y-%m-%d %H:%M:%S")
-        if datetime.datetime.now()-timePublished < datetime.timedelta(hours = 8,minutes = 20):
+        if datetime.datetime.now()-timePublished < datetime.timedelta(hours = 8,minutes = 5):
             alertWavFile = r'c:\a.wav'
             winsound.PlaySound(alertWavFile,winsound.SND_NODEFAULT|winsound.SND_LOOP|winsound.SND_ASYNC)
             logging.info('at ')
@@ -89,11 +89,10 @@ while True:
             logging.info(' found')
             input('请输入任意键后回车停止播放声音\n')
             winsound.PlaySound(None,0)
-            time.sleep(60*60*8)
+            time.sleep(60*60*5)
         else:
             logging.info(datetime.datetime.now())
             time.sleep(50)
     else:
         logging.info(datetime.datetime.now())
         time.sleep(50)
-
